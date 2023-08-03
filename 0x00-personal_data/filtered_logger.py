@@ -22,6 +22,7 @@ def filter_datum(fields: List[str], redaction: str,
                          field + "=" + redaction + separator, message)
     return message
 
+"""Class RedactingFormatter that inherits from logging.Formatter"""
 class RedactingFormatter(logging.Formatter):
     """A custom log formatter that redacts sensitive information from log messages"""
 
