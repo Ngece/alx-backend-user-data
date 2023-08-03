@@ -23,8 +23,7 @@ def filter_datum(fields: List[str], redaction: str,
     return message
 
 class RedactingFormatter(logging.Formatter):
-    """ Redacting Formatter class
-        """
+    """A custom log formatter that redacts sensitive information from log messages"""
 
     REDACTION = "***"
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
@@ -34,6 +33,7 @@ class RedactingFormatter(logging.Formatter):
         super(RedactingFormatter, self).__init__(self.FORMAT)
 
     def format(self, record: logging.LogRecord) -> str:
+        """Override the format method to apply redaction to the log message"""
         NotImplementedError
         return filter_datum(RedactingFormatter.FIELDS,
                             RedactingFormatter.REDACTION,
@@ -68,7 +68,8 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
 def main():
     """A function that obtains a database connection using get_db and
     retrieves all rows in the users table and display each row under a
-    filtered format"""
+    filtered format
+    """
     db = get_db()
     cursor = db.cursor()
     cursor.execute("SELECT * FROM users;")
