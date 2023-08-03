@@ -22,14 +22,15 @@ def filter_datum(fields: List[str], redaction: str,
                          field + "=" + redaction + separator, message)
     return message
 
+"""A class that inherits from logging.Formatter and filters values in incoming log records using filter_datum"""
 class RedactingFormatter(logging.Formatter):
     """A custom log formatter that redacts sensitive information from log messages"""
-
     REDACTION = "***"
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
     SEPARATOR = ";"
 
     def __init__(self, fields: List[str]):
+        """Initialize a RedactingFormatter object"""
         super(RedactingFormatter, self).__init__(self.FORMAT)
         self.fields = fields
 
