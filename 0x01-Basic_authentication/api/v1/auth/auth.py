@@ -1,47 +1,33 @@
-#!/usr/bin/env python3
-"""Authentication Module
-This module provides a class for handling authentication related tasks.
-"""
-
 from flask import request
-from typing import List, TypeVar, Optional
-from os import getenv
-class auth:
-    """Authentication class
-    This class provides methods for handling authentication tasks.
-    """
+from typing import List, TypeVar
 
+class Auth:
+    """Auth class for managing API authentication"""
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        """Check if authentication is required
+        """Check if authentication is required for the given path and excluded paths       
         Args:
             path (str): The request path.
-            excluded_paths (List[str]): List of paths that are excluded from authentication.
+            excluded_paths (List[str]): List of paths that are excluded from authentication.       
         Returns:
-            bool: True if authentication is required, False if excluded.
+            bool: False (authentication is not required for now).
         """
-        if path is None or excluded_paths is None or excluded_paths == []:
-            return True
-        if path[-1] != '/':
-            path = path + '/'
-        if path in excluded_paths:
-            return False
-        return True
-            
+        return False
+
     def authorization_header(self, request=None) -> str:
-        """Get the Authorization header from the request
+        """Get the Authorization header from the request       
         Args:
-            request: The Flask request object.
+            request: The Flask request object.       
         Returns:
             str: The value of the Authorization header.
         """
         if request is None:
             return None
         return request.headers.get('Authorization', None)
-    
+
     def current_user(self, request=None) -> TypeVar('User'):
         """Get the current user
         Args:
-            request: The Flask request object.
+            request: The Flask request object.   
         Returns:
             TypeVar('User'): The current user object.
         """
