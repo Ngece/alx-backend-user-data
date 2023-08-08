@@ -29,7 +29,7 @@ def unauthorized(error) -> str:
 
 @app.route('/api/v1/unauthorized', methods=['GET'], strict_slashes=False)
 def unauthorized() -> str:
-    """ unauthorized route
+    """ abort unauthorized route
     """
     abort(401)
 
@@ -39,7 +39,11 @@ def forbidden(error) -> str:
     """
     return jsonify({"error": "Forbidden"}), 403
     
-
+@app.route('/api/v1/forbidden', methods=['GET'], strict_slashes=False)
+def forbidden() -> str:
+    """ abort forbidden route
+    """
+    abort(403)
 
 if __name__ == "__main__":
     host = getenv("API_HOST", "0.0.0.0")
