@@ -19,10 +19,17 @@ class Auth:
             return True
         
         """ Ensure slash tolerance"""
-        path = path.rstrip('/') + '/' + '*'
+        path = path.rstrip('/') + '/'
         
         if path in excluded_paths:
             return False
+        for excluded_path in excluded_paths:
+            if excluded_path.endswith('*'):
+                prefix = excluded_path[:-1]
+                if path.startswith(prefix):
+                    return False
+            elif path == excluded_path:
+                return False
         
         return True
 
