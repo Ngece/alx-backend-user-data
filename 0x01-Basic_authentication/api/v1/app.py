@@ -27,15 +27,17 @@ def unauthorized(error) -> str:
     return jsonify({"error": "Unauthorized"}), 401
     abort(403)
 
+""" Unauthorized route"""
 @app.route('/api/v1/unauthorized', methods=['GET'], strict_slashes=False)
 def unauthorized() -> str:
     """ abort unauthorized route
     """
     abort(401)
 
+""" Forbidden route"""
 @app.errorhandler(403)
 def forbidden(error) -> str:
-    """ Forbidden handler
+    """ abort Forbidden handler
     """
     return jsonify({"error": "Forbidden"}), 403
     
