@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""auth module"""
+"""authantication module"""
 
 from flask import request
 from typing import List, TypeVar
+from os import getenv
 
 """auth class"""
 class auth:
@@ -27,9 +28,4 @@ class auth:
         """current_user method"""
         return None
     
-    def session_cookie(self, request=None):
-        """session_cookie method"""
-        if request is None:
-            return None
-        return request.cookies.get('session_id', None)
     
