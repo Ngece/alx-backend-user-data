@@ -8,22 +8,22 @@ from typing import List, TypeVar
 class auth:
     """auth class"""
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        """require_auth function"""
+        """require_auth method"""
         if path is None or excluded_paths is None or excluded_paths == []:
             return True
         if path[-1] != '/':
-            path += '/'
+            path = path + '/'
         if path in excluded_paths:
             return False
         return True
-
+    
     def authorization_header(self, request=None) -> str:
-        """authorization_header function"""
-        if request is None or "Authorization" not in request.headers:
+        """authorization_header method"""
+        if request is None:
             return None
-        return request.headers["Authorization"]
-
+        return request.headers.get('Authorization', None)
+    
     def current_user(self, request=None) -> TypeVar('User'):
-        """current_user function"""
+        """current_user method"""
         return None
     
