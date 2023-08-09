@@ -48,10 +48,4 @@ class SessionAuth(Auth):
         del self.user_id_by_session_id[session_cookie]
         return True
 
-    def session_cookie(self, request=None):
-        """ Session Cookie
-        """
-        if request is None:
-            return None
-        return request.cookies.get(getenv('SESSION_NAME'))
     
