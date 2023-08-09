@@ -31,3 +31,13 @@ def login() -> str:
         response.set_cookie(getenv('SESSION_NAME'), session_id)
         return response
     
+@app_views.route('/auth_session/logout', methods=['DELETE'], strict_slashes=False)
+def logout() -> str:
+    """ DELETE /api/v1/auth_session/logout
+    Return:
+      - empty JSON if the User has been correctly deleted
+      - 404 if the User ID doesn't exist
+    """
+    if auth.destroy_session(request) is False:
+        abort(404)
+    return jsonify({}), 200
