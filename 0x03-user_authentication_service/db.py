@@ -43,6 +43,4 @@ class DB:
     def find_user_by(self, **kwargs) -> User:
         """Method that returns the first row found in the users table
         """
-        if not all(key in User.__table__.columns for key in kwargs):
-            raise InvalidRequestError
         return self._session.query(User).filter_by(**kwargs).first()
