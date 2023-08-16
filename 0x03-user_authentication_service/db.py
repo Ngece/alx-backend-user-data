@@ -43,10 +43,10 @@ class DB:
     def find_user_by(self, **kwargs) -> User:
         """returns user based on arguments passed"""
         try:
-            user = self._session.query(User).filter_by(**kwargs).first()
+            result = self._session.query(User).filter_by(**kwargs).first()
         except TypeError:
             raise InvalidRequestError
-        if user is None:
+        if result is None:
             raise NoResultFound
-        return user
+        return result
     
