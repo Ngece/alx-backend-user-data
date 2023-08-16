@@ -39,17 +39,14 @@ class DB:
         self._session.add(new_user)
         self._session.commit()
         return new_user
-    
+
     def find_user_by(self, **kwargs) -> User:
+        """returns user based on arguments passed"""
         try:
-            query = Query(User).filter_by(**kwargs)
-            user = query.first()
-            
-            if user is None:
-                raise NoResultFound("No user found with the given filters.")
-            return user
-        except InvalidRequestError as e:
-            """ Handle the InvalidRequestError (print an error message, etc.)
-            """
-            print(f"Invalid request: {e}")
-            raise
+            user = self._session.query(User).filter_by(**kwargs).first()
+        except TypeError:
+            raise InvalidRequestError
+        if user is None:
+            raise NoResultFound
+        return user
+    
