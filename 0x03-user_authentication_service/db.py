@@ -9,9 +9,9 @@ from sqlalchemy.exc import InvalidRequestError, NoResultFound
 from sqlalchemy.orm.query import Query
 from user import Base, User
 
-"""DB module"""
+"""DB module contains the DB class"""
 class DB:
-    """DB class
+    """DB class to interact with the database
     """
 
     def __init__(self) -> None:
@@ -40,21 +40,32 @@ class DB:
         return new_user
 
     def find_user_by(self, **kwargs) -> User:
-        """returns user based on arguments passed"""
+        """Finds a user in the database"""
         try:
-            result = self._session.query(User).filter_by(**kwargs).first()
-        except TypeError:
-            raise InvalidRequestError
-        if result is None:
-            raise NoResultFound
-        return result
-    
+            query = Query(User).filter_by(**kwargs)
+            user = query.first()
+            
+            if user is None:
+                raise NoResultFound("No user found with the given filters.")
+            
+            return user
+        except InvalidRequestError:
+            raise InvalidRequestError("Wrong query arguments passed.")
+
+
     def update_user(self, user_id: int, **kwargs) -> None:
-        """Updates user"""
-        user = self.find_user_by(id=user_id)
+        """Updates a user in the database"""
+        user = self._session.query(User).get(user_id)
+        
+        if user is None:
+            raise NoResultFound("No user found with the given user_id.")
+        
         for key, value in kwargs.items():
-            if not hasattr(user, key):
-                raise ValueError
-            setattr(user, key, value)
+            if hasattr(user, key):
+                setattr(user, key, value)
+            else:
+                raise ValueError(f"Attribute '{key}' does not correspond to a user attribute.")
+        
         self._session.commit()
         return None
+    
